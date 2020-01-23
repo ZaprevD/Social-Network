@@ -1,0 +1,60 @@
+.nameHolder{
+  display: flex;
+  justify-content: space-between;
+}
+
+.nameHolder h3{
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+.nameHolder p{
+  margin-top: 10px;
+}
+
+.post-holder{
+    width: 50%;
+    margin: 20px auto;
+    padding: 30px;
+    border: 3px solid rgb(192, 190, 190)
+}
+
+.text-holder{
+    padding: 20px;
+    border: 1px solid silver;
+    margin: 20px 0;
+}
+
+.button-holder{
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-holder button{
+  margin: 5px 15px;
+  padding: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  align-self: center;
+}
+
+.button-holder button:hover{
+  background-color: burlywood;
+}
+
+.small-image{
+  width: 50px;
+  height: 50px;
+  border: 1px solid silver;
+  border-radius: 50%;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
+.small-image img{
+  width: 95%;
+}

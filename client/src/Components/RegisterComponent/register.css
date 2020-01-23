@@ -1,0 +1,43 @@
+.form-box{
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px
+}
+
+.register-inputs{
+    width: 50%;
+    margin: 30px auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid rgb(105, 105, 248);
+    border-radius: 20px;
+    box-shadow: 10px 5px 10px blue;
+}
+
+.register-inputs h3{
+    margin: 15px 0;
+}
+
+.register-inputs input{
+    padding: 8px;
+    font-size: 15px;
+    margin: 10px 0;
+    border: 1px solid grey;
+    border-radius: 10px;
+    box-shadow: 3px 2px 5px gray;
+}
+
+.register-inputs button{
+    padding: 10px;
+    cursor: pointer;
+    background-color: rgb(70, 255, 70);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.register-inputs button:hover{
+    background-color: rgb(107, 189, 107);
+}

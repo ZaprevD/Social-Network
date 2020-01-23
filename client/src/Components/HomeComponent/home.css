@@ -1,0 +1,29 @@
+.new-post{
+    padding: 10px;
+    width: 60%;
+    margin: 20px auto;
+    border: 1px solid rgb(48, 47, 47);
+}
+
+.all-posts{
+    width: 100%;
+    margin: 10px auto;
+    padding: 15px;
+    border: 1px solid rgb(155, 138, 138);
+}
+
+.new-post input{
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+}
+
+.new-post button{
+    padding:5px 15px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+form{
+    padding: 10px;
+}

@@ -1,0 +1,20 @@
+.image-holder{
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-color: white;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.image-holder img{
+    width: 95%;
+}
+.profile-box{
+    width: 20%;
+    padding: 15px;
+    text-align: center  ;
+}
