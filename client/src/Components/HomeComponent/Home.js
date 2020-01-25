@@ -13,7 +13,8 @@ class Home extends Component {
             posts: [],
             newPostText: "",
             userId: "",
-            searchFilter: ""
+            searchFilter: "",
+            firstName: ""
         }
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.newPost = this.newPost.bind(this);
@@ -23,9 +24,9 @@ class Home extends Component {
         let token = localStorage.token;
         let decoded = jwt_decode(token);
         let posts = await getAllPosts();
-        this.setState({ posts: posts.reverse() })
+        this.setState({ posts: posts })
         this.setState({ userId: decoded.currentUser.Id })
-
+        this.setState({ firstName: decoded.currentUser.firstName })
     }
     onChangeHandler = (e) => {
         e.preventDefault();
@@ -44,12 +45,11 @@ class Home extends Component {
     }
 
     render() {
-        
+
         let allPostss = this.state.posts.filter(el => {
-            console.log(el.First_Name)
             return el.Text.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
-            el.First_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
-            el.Last_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase());
+                el.First_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
+                el.Last_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase());
         });
 
         let checkPosts = null;
@@ -61,6 +61,7 @@ class Home extends Component {
         if (localStorage.token) {
             return (
                 <div className="container">
+                    <h2>{this.state.firstName}</h2>
                     <SearchFilder changed={this.onChangeHandler} val={this.state.searchFilter} />
                     <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
                     {checkPosts}

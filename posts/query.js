@@ -40,7 +40,7 @@ postStatusQuery = (body) => {
 }
 
 getAllPostsQuery = () => {
-    let query = "SELECT * FROM post JOIN user ON userId = user.Id";
+    let query = "SELECT * FROM post JOIN user ON userId = user.Id ORDER BY Created_On DESC";
     return new Promise((resolve, reject) => {
         conn.query(query, (error, results, fields) => {
             if (error) {
