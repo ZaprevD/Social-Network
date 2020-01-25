@@ -43,22 +43,19 @@ class Home extends Component {
 
     render() {
         let allPostss = this.state.posts;
+        let checkPosts = null;
+        if (allPostss.length > 0) {
+            checkPosts = <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
+        } else {
+            checkPosts = <h1 style={{ textAlign: "center" }}>Not posts yet</h1>
+        }
         if (localStorage.token) {
-            if (allPostss.length > 0) {
-                return (
-                    <div className="container">
-                        <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
-                        <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
-                    </div>
-                )
-            } else {
-                return (
-                    <div className="container">
-                        <h1 style={{textAlign:"center"}}>Not posts yet</h1>
-                        <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
-                    </div>
-                )
-            }
+            return (
+                <div className="container">
+                    <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
+                    {checkPosts}
+                </div>
+            )
         } else {
             window.location.href = "/";
         }
