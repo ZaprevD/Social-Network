@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./home.css";
-import Post from "../PostComponent/Post";
 import jwt_decode from "jwt-decode";
+import NewPostForm from "./Partials/NewPostForm";
+import AllPosts from "./Partials/AllPosts";
 import { getAllPosts } from "../userFunctions";
 import { postStatus } from "../userFunctions";
-import { deletePost } from "../userFunctions";
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -42,40 +42,20 @@ class Home extends Component {
     }
 
     render() {
-        let orderPosts = this.state.posts;
+        let allPostss = this.state.posts;
         if (localStorage.token) {
-            if (orderPosts.length > 0) {
+            if (allPostss.length > 0) {
                 return (
                     <div className="container">
-                        <form onSubmit={this.newPost}>
-                            <div className="new-post">
-                                <p style={{ textAlign: "center" }}>What is on your mind?</p>
-                                <input type="textarea" name="newPostText" onChange={this.onChangeHandler} />
-                                <button type="submit">Post</button>
-                            </div>
-                        </form>
-                        <div className="all-posts">
-                            {orderPosts.map(element => {
-                                return <Post key={element.postId} deleted={() => deletePost(element.postId)}
-                                    btnName={element.userId === this.state.userId ? "Delete" : "Report"}
-                                    fullName={element.First_Name + " " + element.Last_Name}
-                                    imgUrl={element.imageUrl}
-                                    likes={element.Likes} date={element.created_On} post={element.Text} />
-                            })}
-                        </div>
+                        <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
+                        <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
                     </div>
                 )
             } else {
                 return (
                     <div className="container">
-                        <h1>Not posts yet</h1>
-                        <form onSubmit={this.newPost}>
-                            <div className="new-post">
-                                <p style={{ textAlign: "center" }}>What is in your mind?</p>
-                                <input type="textarea" name="newPostText" onChange={this.onChangeHandler} />
-                                <button type="submit">Post</button>
-                            </div>
-                        </form>
+                        <h1 style={{textAlign:"center"}}>Not posts yet</h1>
+                        <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
                     </div>
                 )
             }

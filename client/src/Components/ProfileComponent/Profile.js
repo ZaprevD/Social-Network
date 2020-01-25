@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileInfo from "./ProfileInfo";
+import ProfileInfo from "./Partials/ProfileInfo";
 const Profile = () => {
 
     if (localStorage.token) {

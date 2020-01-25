@@ -1,5 +1,6 @@
 import React from "react";
 import "./post.css";
+
 const Post = (props) => {
 
     const style = {
