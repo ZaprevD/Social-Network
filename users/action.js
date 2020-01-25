@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User, Post } = require("../models");
 require("dotenv").config();
-const timestamp = require('time-stamp');
+// const timestamp = require('time-stamp');
 getAllUsers = async (req, res) => {
     try {
         let data = await query.getAllUsersQuery();

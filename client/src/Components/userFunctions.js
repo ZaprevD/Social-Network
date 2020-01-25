@@ -92,7 +92,7 @@ export const changePicture = (url, id) => {
 export const deletePost = (id) => {
     return axios.delete(`/post/${id}`, auth)
     .then(res => {
-        console.log(res.data);
+        console.log(res);
     })
     .catch(error =>{
         console.log(error.message);

@@ -4,6 +4,7 @@ import Post from "../PostComponent/Post";
 import ChangePictureWindow from "../ChangePictureComponent/ChangePictureWindow";
 import { changePicture } from "../userFunctions";
 import { getImageUrl } from "../userFunctions";
+import { deletePost } from "../userFunctions";
 import "./profile.css";
 import { getPostsForCurrentUser } from '../userFunctions';
 class ProfileInfo extends React.Component {
@@ -25,21 +26,25 @@ class ProfileInfo extends React.Component {
         }
     }
 
-    async   componentDidMount() {
+    async componentDidMount() {
         let token = localStorage.token;
         let decoded = jwt_decode(token);
-        let posts = await getPostsForCurrentUser(decoded.currentUser.Id);
-        let imageUrl = await getImageUrl(decoded.currentUser.Id);
-        this.setState({
-            currentUser: {
-                id: decoded.currentUser.Id,
-                firstName: decoded.currentUser.firstName,
-                lastName: decoded.currentUser.lastName,
-                email: decoded.currentUser.email,
-                posts: posts.reverse()
-            },
-            imageUrl: imageUrl,
-        })
+       await getPostsForCurrentUser(decoded.currentUser.Id).then(res => {
+            this.setState({
+                currentUser: {
+                    id: decoded.currentUser.Id,
+                    firstName: decoded.currentUser.firstName,
+                    lastName: decoded.currentUser.lastName,
+                    email: decoded.currentUser.email,
+                    posts: res.reverse()
+                },
+                imageUrl: "",
+            })
+        });
+      await  getImageUrl(decoded.currentUser.Id).then(res => {
+            this.setState({ imageUrl: res })
+        });
+
     }
 
     changePictureWindowShow = () => {
@@ -78,7 +83,7 @@ class ProfileInfo extends React.Component {
                         changedUrl={this.setNewPictureUrl} submitEvent={this.changePictureEvent} /> : null}
                     {reversedPosts.map(element => {
                         return <Post date={element.created_On} btnName={"Delete"}
-                            imgUrl={this.state.imageUrl}
+                            imgUrl={this.state.imageUrl} deleted={() =>deletePost(element.postId)}
                             fullName={this.state.currentUser.firstName
                                 + " " + this.state.currentUser.lastName}
                             likes={element.Likes} key={element.postId} post={element.Text} />
@@ -96,7 +101,7 @@ class ProfileInfo extends React.Component {
                             <h3>{this.state.currentUser.firstName + ` ` + this.state.currentUser.lastName} </h3>
                             <button onClick={this.changePictureWindowShow}>Change Picture</button>
                         </div>
-                            <h3 style={{ textAlign: "center", margin: "30px 0" }}>You dont have any posts</h3>
+                        <h3 style={{ textAlign: "center", margin: "30px 0" }}>You dont have any posts</h3>
                     </div>
                     {this.state.changePictureWindowShow ? <ChangePictureWindow
                         changedUrl={this.setNewPictureUrl} submitEvent={this.changePictureEvent} /> : null}

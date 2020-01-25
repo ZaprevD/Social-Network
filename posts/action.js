@@ -4,7 +4,6 @@ const { Post } = require("../models");
 
 getPostsForSpecificUser = async (req, res) => {
     try {
-        console.log(req)
         let data = await query.getPostsFromSpecificUserQuery(req.params.id);
         let resolvedData = data.map(element => {
             return new Post(element.PostId, element.Text, element.Created_On,
