@@ -3,6 +3,7 @@ import "./home.css";
 import jwt_decode from "jwt-decode";
 import NewPostForm from "./Partials/NewPostForm";
 import AllPosts from "./Partials/AllPosts";
+import SearchFilder from "./Partials/SearchFilter";
 import { getAllPosts } from "../userFunctions";
 import { postStatus } from "../userFunctions";
 class Home extends Component {
@@ -11,7 +12,8 @@ class Home extends Component {
         this.state = {
             posts: [],
             newPostText: "",
-            userId: ""
+            userId: "",
+            searchFilter: ""
         }
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.newPost = this.newPost.bind(this);
@@ -42,7 +44,14 @@ class Home extends Component {
     }
 
     render() {
-        let allPostss = this.state.posts;
+        
+        let allPostss = this.state.posts.filter(el => {
+            console.log(el.First_Name)
+            return el.Text.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
+            el.First_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
+            el.Last_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase());
+        });
+
         let checkPosts = null;
         if (allPostss.length > 0) {
             checkPosts = <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
@@ -52,6 +61,7 @@ class Home extends Component {
         if (localStorage.token) {
             return (
                 <div className="container">
+                    <SearchFilder changed={this.onChangeHandler} val={this.state.searchFilter} />
                     <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
                     {checkPosts}
                 </div>

@@ -27,3 +27,17 @@
 form{
     padding: 10px;
 }
+
+.search-box{
+    padding: 10px;
+    border: 1px solid silver;
+    border-radius: 10px;
+}
+
+.search-box input{
+    padding: 3px;
+    width: 25%;
+    border-radius: 5px;
+    font-size: 15px;
+    border: none;
+}
