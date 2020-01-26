@@ -68,7 +68,7 @@ export const postStatus = (text, id) => {
 export const getImageUrl = (id) => {
     return axios.get(`/user/${id}/image`, auth)
         .then(res => {
-            return res.data.Image;
+            return res.data[0].Image;
         })
         .catch(err => {
             console.log(err.message);

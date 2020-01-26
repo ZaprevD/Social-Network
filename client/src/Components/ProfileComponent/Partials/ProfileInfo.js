@@ -42,6 +42,7 @@ class ProfileInfo extends React.Component {
             })
         });
         await getImageUrl(decoded.currentUser.Id).then(res => {
+            
             this.setState({ imageUrl: res })
         });
     }
@@ -53,6 +54,7 @@ class ProfileInfo extends React.Component {
 
     setNewPictureUrl = (e) => {
         e.preventDefault();
+        console.log(this.state.newPictureUrl);
         this.setState({ newPictureUrl: e.target.value })
     }
 

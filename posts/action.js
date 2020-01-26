@@ -1,29 +1,36 @@
-const query = require("./query");
-const { Post } = require("../models");
 
+const { Post } = require("../models");
+const post = require("../dbModels/post");
+const db = require("../database");
 
 getPostsForSpecificUser = async (req, res) => {
     try {
-        let data = await query.getPostsFromSpecificUserQuery(req.params.id);
-        let resolvedData = data.map(element => {
-            return new Post(element.PostId, element.Text, element.Created_On,
-                element.Likes, element.userId);
+        const posts = await post.findAll({
+            where: {
+                userId: req.params.id
+            }
         })
-        res.status(200).send(resolvedData);
+        let clearPosts = posts.map(el => {
+            return new Post(el.dataValues.PostId, el.dataValues.Text, el.dataValues.Created_On,
+                el.dataValues.Likes, el.dataValues.userId);
+        })
+        res.status(200).json(clearPosts);
     } catch (error) {
-        res.status(500).send(error.message)
+        console.log(error);
     }
 }
 
 
 getAllPosts = async (req, res) => {
     try {
-        let posts = await query.getAllPostsQuery();
-        let resolvedData = posts.map(element => {
-            return new Post(element.PostId, element.Text, element.Created_On,
-                element.Likes, element.userId, element.First_Name, element.Last_Name, element.Email, element.Image);
-        })
-        res.status(200).send(resolvedData);
+        await db.sequelize.query("SELECT * FROM post JOIN user ON userId = user.Id ORDER BY Created_On DESC")
+            .then(result => {
+                let resolvedData = result[0].map(element => {
+                    return new Post(element.PostId, element.Text, element.Created_On,
+                        element.Likes, element.userId, element.First_Name, element.Last_Name, element.Email, element.Image);
+                })
+                res.status(200).send(resolvedData);
+            })
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -32,21 +39,32 @@ getAllPosts = async (req, res) => {
 
 postStatus = async (req, res) => {
     try {
-        await query.postStatusQuery(req.body);
-        res.status(200).send("Status posted!");
+        let txt = req.body.Text;
+        let id = req.body.userId;
+        await post.create({
+            Text: txt,
+            userId: id
+        }).then(result => {
+            res.status(200).send("Posted!")
+        });
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error.message);
     }
 }
 
-
-deletePost = async(req, res) => {
+deletePost = async (req, res) => {
     try {
-        await query.deletePostQuery(req.params.postId);
-        res.status(200).send("Post Deleted!");
+        const id = req.params.postId;
+        post.destroy({
+            where: {
+                PostId: id
+            }
+        }).then(result => {
+            res.status(200).send("Post Deleted!");
+        })
     } catch (error) {
-        res.status(500).send(error.message)
+        res.status(500).send(error.message);
     }
 }
 
-module.exports = {deletePost,postStatus,getAllPosts, getPostsForSpecificUser }
+module.exports = { deletePost, postStatus, getAllPosts, getPostsForSpecificUser }

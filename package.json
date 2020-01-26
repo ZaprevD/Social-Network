@@ -22,6 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mysql": "github:mysqljs/mysql",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.3",
     "time-stamp": "^2.2.0"
   },
   "devDependencies": {

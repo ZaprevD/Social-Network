@@ -1,13 +1,18 @@
-let mySql = require("mysql");
-let connection = mySql.createConnection({
-    user: process.env.USER,
+const Sequelize = require("sequelize");
+const db = {};
+const sequelize = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
     host: process.env.HOST,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-});
+    dialect: 'mysql',
 
-connection.connect((error) => {
-    if(error) throw error;
-    console.log(`DB Connected!`);
-});
-module.exports  = connection;
+    pool: {
+        max: 5,
+        min: 0,
+        acquire: 30000,
+        idle: 10000
+    },
+})
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+module.exports = db;

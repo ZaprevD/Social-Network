@@ -2,6 +2,7 @@ let express = require("express");
 let routes = express.Router();
 const action = require("./action");
 
+
 routes.get("/users", action.getAllUsers);
 routes.get("/user/:userId/image", action.getImageUrl);
 routes.post("/register", action.registerUser);
