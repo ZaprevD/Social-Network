@@ -3,7 +3,7 @@ import "./home.css";
 import jwt_decode from "jwt-decode";
 import NewPostForm from "./Partials/NewPostForm";
 import AllPosts from "./Partials/AllPosts";
-import SearchFilder from "./Partials/SearchFilter";
+import SearchFilter from "./Partials/SearchFilter";
 import { getAllPosts } from "../userFunctions";
 import { postStatus } from "../userFunctions";
 class Home extends Component {
@@ -45,7 +45,6 @@ class Home extends Component {
     }
 
     render() {
-
         let allPostss = this.state.posts.filter(el => {
             return el.Text.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
                 el.First_Name.toLowerCase().includes(this.state.searchFilter.toLowerCase()) ||
@@ -53,16 +52,13 @@ class Home extends Component {
         });
 
         let checkPosts = null;
-        if (allPostss.length > 0) {
-            checkPosts = <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
-        } else {
-            checkPosts = <h1 style={{ textAlign: "center" }}>Not posts yet</h1>
-        }
+        allPostss.length > 0 ? checkPosts = <AllPosts allposts={allPostss} loggedUserId={this.state.userId} />
+            : checkPosts = <h1 style={{ textAlign: "center" }}>Not posts yet</h1>
         if (localStorage.token) {
             return (
                 <div className="container">
                     <h2>{this.state.firstName}</h2>
-                    <SearchFilder changed={this.onChangeHandler} val={this.state.searchFilter} />
+                    <SearchFilter changed={this.onChangeHandler} val={this.state.searchFilter} />
                     <NewPostForm newPostEvent={this.newPost} onChangeHandler={this.onChangeHandler} />
                     {checkPosts}
                 </div>
