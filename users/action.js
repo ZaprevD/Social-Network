@@ -53,13 +53,21 @@ loginUser = async (req, res) => {
 
 registerUser = async (req, res) => {
     try {
-        let hash = bcrypt.hashSync(req.body.password, 10);
-        await user.create({
-            First_Name: req.body.firstName,
-            Last_Name: req.body.lastName,
-            Email: req.body.email,
-            Password: hash
-        }).then(() => res.status(200).send("Registered"));
+        let allUsers = await getAllUsers();
+        const found = allUsers.some(user => {
+            return user.Email === req.body.email;
+        });
+        if (!found) {
+            let hash = bcrypt.hashSync(req.body.password, 10);
+            await user.create({
+                First_Name: req.body.firstName,
+                Last_Name: req.body.lastName,
+                Email: req.body.email,
+                Password: hash
+            }).then(() => res.status(200).send("Registered"));
+        }else{
+            res.status(422).send("Email alredy exists");
+        }
     } catch (error) {
         res.status(500).send(error.message);
     }

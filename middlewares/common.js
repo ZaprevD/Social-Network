@@ -11,13 +11,13 @@ wrongRoute = (req, res, next) => {
 }
 
 errorHandler = (err, req, res, next) => {
-    let errObj = {
+    var errorObj = {
         status: err.status,
         error: {
             message: err.message
         }
-    }
-    res.status(err.status).json(err.message);
-}
+    };
 
+    res.status(err.status).json(errorObj);
+};
 module.exports = { logger, wrongRoute, errorHandler }

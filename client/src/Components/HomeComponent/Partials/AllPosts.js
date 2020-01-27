@@ -14,7 +14,6 @@ const AllPosts = (props) => {
             })}
         </div>
     )
-    
 }
 
 export default AllPosts;

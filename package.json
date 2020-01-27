@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "express-unless": "^0.5.0",
+    "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mysql": "github:mysqljs/mysql",

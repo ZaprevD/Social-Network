@@ -26,7 +26,7 @@ module.exports = db.sequelize.define("post", {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: user, // 'post' refers to table name
+            model: user, // 'user' refers to table name
             key: 'Id', // 'id' refers to column name in user table
         }
     }
