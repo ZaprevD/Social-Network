@@ -21,6 +21,7 @@ class Home extends Component {
     }
 
     async  componentDidMount() {
+     
         let token = localStorage.token;
         let decoded = jwt_decode(token);
         let posts = await getAllPosts();
@@ -63,7 +64,7 @@ class Home extends Component {
                     {checkPosts}
                 </div>
             )
-        } else {
+        }else{
             window.location.href = "/";
         }
     }

@@ -43,7 +43,6 @@ export const getPostsForCurrentUser = (id) => {
 export const getAllPosts = () => {
     return axios.get(`/posts/all`,auth)
         .then(res => {
-            // console.log(res.data)
             return res.data
         })
         .catch(err => {

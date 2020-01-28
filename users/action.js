@@ -1,11 +1,10 @@
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { User, Post } = require("../models");
+const { User } = require("../models");
 require("dotenv").config();
 const user = require("../dbModels/user");
 // const timestamp = require('time-stamp');
-
 
 getAllUsers = async (req, res) => {
     try {
@@ -15,7 +14,7 @@ getAllUsers = async (req, res) => {
         let clearData = rawData.map(el => {
             return el.dataValues
         })
-        return clearData
+        return clearData;
     } catch (error) {
         res.status(500).send(error.message);
     }
@@ -33,7 +32,6 @@ getSpecificUser = async (email) => {
         console.log(error.message)
     }
 }
-
 
 loginUser = async (req, res) => {
     let dbUser = await getSpecificUser(req.body.Email);
@@ -65,7 +63,7 @@ registerUser = async (req, res) => {
                 Email: req.body.email,
                 Password: hash
             }).then(() => res.status(200).send("Registered"));
-        }else{
+        } else {
             res.status(422).send("Email alredy exists");
         }
     } catch (error) {

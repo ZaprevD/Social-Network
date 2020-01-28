@@ -1,7 +1,8 @@
 
 const { Post } = require("../models");
 const post = require("../dbModels/post");
-const db = require("../database");
+const user = require("../dbModels/user");
+
 
 getPostsForSpecificUser = async (req, res) => {
     try {
@@ -23,19 +24,28 @@ getPostsForSpecificUser = async (req, res) => {
 
 getAllPosts = async (req, res) => {
     try {
-        await db.sequelize.query("SELECT * FROM post JOIN user ON userId = user.Id ORDER BY Created_On DESC")
-            .then(result => {
-                let resolvedData = result[0].map(element => {
+        let resolvedData;
+        post.belongsTo(user)
+        await post.findAll({
+            include: [{ model: user, required: true }], order: [
+                ['created_On', 'DESC']
+            ]
+        },
+            { raw: true }).then(res => {
+                let clearData = JSON.stringify(res)
+                resolvedData = JSON.parse(clearData).map(element => {
                     return new Post(element.PostId, element.Text, element.Created_On,
-                        element.Likes, element.userId, element.First_Name, element.Last_Name, element.Email, element.Image);
+                        element.Likes, element.userId, element.user.First_Name, element.user.Last_Name,
+                        element.user.Email, element.user.Image);
                 })
-                res.status(200).send(resolvedData);
-            })
+            }).error((error) => {
+                console.log("error : " + error)
+            });
+        res.status(200).send(resolvedData);
     } catch (error) {
         res.status(500).send(error.message);
     }
 }
-
 
 postStatus = async (req, res) => {
     try {

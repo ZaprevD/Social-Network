@@ -1,11 +1,11 @@
 import React from "react"
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const RegisterLink = () => {
     return (
         <div>
-            <Link to="/register" className="register-btn">Sign Up</Link>
-            <Link to="/" className="register-btn">Login</Link>
+            <NavLink to="/register" exact className="register-btn">Sign Up</NavLink>
+            <NavLink to="/" exact className="register-btn">Login</NavLink>
         </div>
     )
 }

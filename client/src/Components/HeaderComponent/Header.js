@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import  UserLink  from "./Partials/UserLink";
 import RegisterLink from "./Partials/RegisterLink";
 import "./header.css"
@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <div className="container-flex header">
             <div className="box-50">
-                <Link to="/home"><i className="fa fa-home"></i></Link>
+                <NavLink to="/home"><i className="fa fa-home"></i></NavLink>
             </div>
             <div className="box-50">
                 {localStorage.token ? <UserLink logOutEvent={logOut} /> : <RegisterLink />}
